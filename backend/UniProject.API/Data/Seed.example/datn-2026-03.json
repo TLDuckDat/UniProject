@@ -1,0 +1,128 @@
+{
+  "source": "Dữ liệu mẫu hư cấu (thay bằng Data/Seed/datn-2026-03.json khi có dữ liệu thật)",
+  "students": [
+    {
+      "mssv": "6399071001",
+      "hoTen": "Ngô Hữu Yến",
+      "classCode": "CQ.63.CN.CNTT",
+      "advisor": "gv01",
+      "eligible": true,
+      "sample": false,
+      "title": "Xây dựng hệ thống hỏi đáp quy chế đào tạo sử dụng RAG",
+      "reason": null,
+      "purpose": "- Nghiên cứu và xây dựng hệ thống hỏi đáp quy chế đào tạo sử dụng RAG.\n- Đánh giá kết quả trên dữ liệu thực nghiệm.",
+      "objective": null,
+      "scope": "- Khảo sát bài toán, phân tích yêu cầu.\n- Thiết kế, cài đặt và kiểm thử hệ thống.\n- Phạm vi: dữ liệu mẫu, triển khai thử nghiệm.",
+      "method": "Python, LangChain, ChromaDB, FastAPI, ReactJS",
+      "tech": "Python, LangChain, ChromaDB, FastAPI, ReactJS",
+      "results": "- Sản phẩm chạy được các chức năng chính.\n- Báo cáo đồ án tốt nghiệp theo mẫu của Bộ môn.",
+      "plan": null,
+      "chapters": [
+        "CHƯƠNG 1: CƠ SỞ LÝ THUYẾT",
+        "CHƯƠNG 2: PHÂN TÍCH, THIẾT KẾ HỆ THỐNG",
+        "CHƯƠNG 3: CÀI ĐẶT VÀ ĐÁNH GIÁ"
+      ],
+      "report": null
+    },
+    {
+      "mssv": "6399071002",
+      "hoTen": "Đỗ Hữu Mai",
+      "classCode": "CQ.63.CN.CNTT",
+      "advisor": "gv02",
+      "eligible": true,
+      "sample": false,
+      "title": "Ứng dụng YOLO phát hiện phương tiện vi phạm làn đường",
+      "reason": null,
+      "purpose": "- Nghiên cứu và ứng dụng YOLO phát hiện phương tiện vi phạm làn đường.\n- Đánh giá kết quả trên dữ liệu thực nghiệm.",
+      "objective": null,
+      "scope": "- Khảo sát bài toán, phân tích yêu cầu.\n- Thiết kế, cài đặt và kiểm thử hệ thống.\n- Phạm vi: dữ liệu mẫu, triển khai thử nghiệm.",
+      "method": "Python, Ultralytics YOLO, OpenCV, Streamlit",
+      "tech": "Python, Ultralytics YOLO, OpenCV, Streamlit",
+      "results": "- Sản phẩm chạy được các chức năng chính.\n- Báo cáo đồ án tốt nghiệp theo mẫu của Bộ môn.",
+      "plan": null,
+      "chapters": [
+        "CHƯƠNG 1: CƠ SỞ LÝ THUYẾT",
+        "CHƯƠNG 2: PHÂN TÍCH, THIẾT KẾ HỆ THỐNG",
+        "CHƯƠNG 3: CÀI ĐẶT VÀ ĐÁNH GIÁ"
+      ],
+      "report": null
+    },
+    {
+      "mssv": "6399071003",
+      "hoTen": "Phạm Gia Tú",
+      "classCode": "CQ.63.CN.CNTT",
+      "advisor": "gv03",
+      "eligible": true,
+      "sample": false,
+      "title": "Xây dựng website thương mại điện tử tích hợp gợi ý sản phẩm",
+      "reason": null,
+      "purpose": "- Nghiên cứu và xây dựng website thương mại điện tử tích hợp gợi ý sản phẩm.\n- Đánh giá kết quả trên dữ liệu thực nghiệm.",
+      "objective": null,
+      "scope": "- Khảo sát bài toán, phân tích yêu cầu.\n- Thiết kế, cài đặt và kiểm thử hệ thống.\n- Phạm vi: dữ liệu mẫu, triển khai thử nghiệm.",
+      "method": "Next.js, Spring Boot, MySQL",
+      "tech": "Next.js, Spring Boot, MySQL",
+      "results": "- Sản phẩm chạy được các chức năng chính.\n- Báo cáo đồ án tốt nghiệp theo mẫu của Bộ môn.",
+      "plan": null,
+      "chapters": [
+        "CHƯƠNG 1: CƠ SỞ LÝ THUYẾT",
+        "CHƯƠNG 2: PHÂN TÍCH, THIẾT KẾ HỆ THỐNG",
+        "CHƯƠNG 3: CÀI ĐẶT VÀ ĐÁNH GIÁ"
+      ],
+      "report": null
+    },
+    {
+      "mssv": "6399071004",
+      "hoTen": "Bùi Hữu Quân",
+      "classCode": "CQ.63.CN.CNTT",
+      "advisor": "gv04",
+      "eligible": false,
+      "sample": false,
+      "title": "Xây dựng ứng dụng di động quản lý chi tiêu cá nhân",
+      "reason": null,
+      "purpose": "- Nghiên cứu và xây dựng ứng dụng di động quản lý chi tiêu cá nhân.\n- Đánh giá kết quả trên dữ liệu thực nghiệm.",
+      "objective": null,
+      "scope": "- Khảo sát bài toán, phân tích yêu cầu.\n- Thiết kế, cài đặt và kiểm thử hệ thống.\n- Phạm vi: dữ liệu mẫu, triển khai thử nghiệm.",
+      "method": "Flutter, Firebase",
+      "tech": "Flutter, Firebase",
+      "results": "- Sản phẩm chạy được các chức năng chính.\n- Báo cáo đồ án tốt nghiệp theo mẫu của Bộ môn.",
+      "plan": null,
+      "chapters": [
+        "CHƯƠNG 1: CƠ SỞ LÝ THUYẾT",
+        "CHƯƠNG 2: PHÂN TÍCH, THIẾT KẾ HỆ THỐNG",
+        "CHƯƠNG 3: CÀI ĐẶT VÀ ĐÁNH GIÁ"
+      ],
+      "report": null
+    }
+  ],
+  "reviewers": [
+    "gv01",
+    "gv02",
+    "gv03",
+    "gv04",
+    "gv05"
+  ],
+  "committees": [
+    {
+      "code": "HD-DATN26-01",
+      "name": "Hội đồng 1 - Đồ án tốt nghiệp (mẫu)",
+      "room": "Phòng bảo vệ 1",
+      "members": [
+        "tg01",
+        "gv01",
+        "tg02",
+        "gv04"
+      ]
+    },
+    {
+      "code": "HD-DATN26-02",
+      "name": "Hội đồng 2 - Đồ án tốt nghiệp (mẫu)",
+      "room": "Phòng bảo vệ 2",
+      "members": [
+        "gv03",
+        "gv02",
+        "tg03",
+        "gv05"
+      ]
+    }
+  ]
+}

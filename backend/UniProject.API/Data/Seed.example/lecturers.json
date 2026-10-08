@@ -1,0 +1,116 @@
+{
+  "lecturers": [
+    {
+      "username": "gv01",
+      "fullName": "Trần Thanh Quân",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": false,
+      "note": "Trưởng Bộ môn (dữ liệu mẫu)"
+    },
+    {
+      "username": "gv02",
+      "fullName": "Đỗ Anh Duy",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv03",
+      "fullName": "Phạm Bảo Thảo",
+      "degreeId": 4,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv04",
+      "fullName": "Đỗ Ngọc Yến",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv05",
+      "fullName": "Ngô Đức Uyên",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv06",
+      "fullName": "Bùi Bảo Phong",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv07",
+      "fullName": "Phạm Văn Thảo",
+      "degreeId": 2,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv08",
+      "fullName": "Trần Thị Linh",
+      "degreeId": 2,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "gv09",
+      "fullName": "Trần Hữu An",
+      "degreeId": 2,
+      "titleId": null,
+      "visiting": false,
+      "note": null
+    },
+    {
+      "username": "tg01",
+      "fullName": "Dương Hữu Trung",
+      "degreeId": 4,
+      "titleId": 1,
+      "visiting": true,
+      "note": "Giảng viên thỉnh giảng (dữ liệu mẫu)"
+    },
+    {
+      "username": "tg02",
+      "fullName": "Vũ Quốc Nam",
+      "degreeId": 4,
+      "titleId": null,
+      "visiting": true,
+      "note": "Giảng viên thỉnh giảng (dữ liệu mẫu)"
+    },
+    {
+      "username": "tg03",
+      "fullName": "Hoàng Thanh Mai",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": true,
+      "note": "Giảng viên thỉnh giảng (dữ liệu mẫu)"
+    },
+    {
+      "username": "tg04",
+      "fullName": "Đặng Thu Quân",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": true,
+      "note": "Giảng viên thỉnh giảng (dữ liệu mẫu)"
+    },
+    {
+      "username": "tg05",
+      "fullName": "Dương Thị Uyên",
+      "degreeId": 3,
+      "titleId": null,
+      "visiting": true,
+      "note": "Giảng viên thỉnh giảng (dữ liệu mẫu)"
+    }
+  ]
+}

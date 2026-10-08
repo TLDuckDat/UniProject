@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="UniProject.API/UniProject.API.csproj" />
+  <Project Path="UniProject.Share/UniProject.Share.csproj" />
+</Solution>

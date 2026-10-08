@@ -1,0 +1,81 @@
+# ---------------------------------------------------------------
+# .NET / Visual Studio / Rider / VS Code
+# ---------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.userprefs
+_ReSharper*/
+*.DotSettings.user
+
+# Build / publish
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rtifacts/
+publish/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+
+# Test results / coverage
+[Tt]est[Rr]esult*/
+*.trx
+coverage*.json
+coverage*.xml
+*.coverage
+*.coveragexml
+
+# ---------------------------------------------------------------
+# Cấu hình & bí mật — KHÔNG commit
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.pem
+
+# ---------------------------------------------------------------
+# Dữ liệu sinh ra khi chạy ứng dụng
+# ---------------------------------------------------------------
+uploads/
+**/uploads/
+*.mdf
+*.ldf
+*.db
+*.sqlite
+
+# ---------------------------------------------------------------
+# Hệ điều hành
+# ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------------------------------------------------------------
+# Dữ liệu thật dùng để seed (sinh viên, giảng viên, đề tài, báo cáo ĐATN) — KHÔNG commit.
+# Dữ liệu hư cấu cùng định dạng nằm ở Data/Seed.example/ (được commit).
+# ---------------------------------------------------------------
+**/Data/Seed/
+!**/Data/Seed.example/
+
+# Log, file tạm, công cụ
+*.log
+*.tmp
+*.bak
+*.swp
+node_modules/
+.claude/

@@ -1,0 +1,73 @@
+{
+  "fixedGroup": [
+    "6599071001",
+    "6599071002",
+    "6599071003",
+    "6599071004"
+  ],
+  "visual": {
+    "advisor": "gv06",
+    "groups": [
+      {
+        "members": [
+          "6599071001",
+          "6599071002",
+          "6599071003",
+          "6599071004"
+        ],
+        "topic": "Hệ thống quản lý bãi đỗ xe",
+        "content": "Admin: quản lý tài khoản, loại xe, vị trí đỗ, bảng giá và thống kê.\nNhân viên: ghi nhận xe vào/ra, thu phí.\nKhách hàng: đăng ký phương tiện, xem lịch sử gửi xe.",
+        "stack": "C# WinForms (.NET), SQL Server; JIRA/Trello, Git",
+        "feedbacks": [],
+        "originalTopic": null
+      },
+      {
+        "members": [
+          "6599071005",
+          "6599071006",
+          "6599071007",
+          "6599071008"
+        ],
+        "topic": "Hệ thống quản lý nhà sách",
+        "content": "Admin: quản lý sách, nhà cung cấp, nhân viên.\nNhân viên: bán hàng, nhập sách, in hóa đơn.\nThống kê doanh thu, sách bán chạy.",
+        "stack": "C# WinForms (.NET), SQL Server, RDLC Report; JIRA/Trello, Git",
+        "feedbacks": [
+          {
+            "title": "Bổ sung chức năng cho khách hàng",
+            "content": "Bổ sung chức năng tích điểm cho khách hàng thành viên.",
+            "done": true
+          }
+        ],
+        "originalTopic": null
+      },
+      {
+        "members": [
+          "6599071009",
+          "6599071010",
+          "6599071011",
+          "6599071012"
+        ],
+        "topic": "Hệ thống đặt lịch phòng khám",
+        "content": "Lễ tân: tiếp nhận, xếp lịch khám.\nBác sĩ: ghi kết quả khám, kê đơn.\nBệnh nhân: đặt lịch, xem lịch sử khám.",
+        "stack": "C# WinForms (.NET) + ASP.NET Core Web App, SQL Server; JIRA/Trello, Git",
+        "feedbacks": [
+          {
+            "title": "Chỉnh thêm nội dung làm",
+            "content": "Mô tả rõ luồng đặt lịch và xử lý trùng lịch.",
+            "done": false
+          }
+        ],
+        "originalTopic": null
+      }
+    ]
+  },
+  "java": {
+    "advisor": "gv03",
+    "committee": [
+      "gv03",
+      "gv07",
+      "gv08"
+    ],
+    "headOfDepartment": "gv01"
+  }
+}
