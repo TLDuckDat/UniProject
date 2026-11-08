@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "UPM API – Quản lý Đồ án tốt nghiệp",
+    "description": "API hệ thống quản lý ĐATN UTC / UTC2.",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v1/ping": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Trả về \"pong\", phiên bản ứng dụng và thời gian máy chủ.",
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PingResponse": {
+        "required": [
+          "message",
+          "serverTime",
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "serverTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "System"
+    }
+  ]
+}

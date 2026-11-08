@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Domain THUẦN: không phụ thuộc EF hay bất kỳ project nào khác. -->
+</Project>

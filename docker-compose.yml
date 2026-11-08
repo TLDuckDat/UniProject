@@ -1,0 +1,40 @@
+# Hạ tầng phát triển UPM: SQL Server 2022 + Mailpit.
+# Dùng: copy .env.example thành .env (tùy chọn) rồi chạy `docker compose up -d`.
+name: upm
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: upm-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-Upm@Dev12345}
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "${MSSQL_PORT:-1433}:1433"
+    volumes:
+      - upm-sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' -b -o /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: upm-mailpit
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+    restart: unless-stopped
+
+volumes:
+  upm-sqlserver-data:

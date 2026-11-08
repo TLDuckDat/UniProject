@@ -1,0 +1,8 @@
+# Code sinh tự động – không format tay
+src/app/api/
+openapi/
+dist/
+coverage/
+.angular/
+node_modules/
+package-lock.json

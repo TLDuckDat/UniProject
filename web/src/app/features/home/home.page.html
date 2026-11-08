@@ -1,0 +1,42 @@
+<nz-card nzTitle="Kiểm tra kết nối API" [nzExtra]="reloadButton" class="ping-card">
+  @switch (ping().status) {
+    @case ('loading') {
+      <div class="ping-loading">
+        <nz-spin nzSimple nzTip="Đang kết nối máy chủ..."></nz-spin>
+      </div>
+    }
+    @case ('error') {
+      <nz-result
+        nzStatus="error"
+        nzTitle="Không gọi được API"
+        nzSubTitle="Kiểm tra API đã chạy (dotnet run --project src/Upm.Api) rồi bấm “Kiểm tra lại”."
+      ></nz-result>
+    }
+    @case ('ok') {
+      @let result = ping();
+      @if (result.status === 'ok') {
+        <nz-descriptions nzBordered [nzColumn]="1" nzSize="middle">
+          <nz-descriptions-item nzTitle="Phản hồi">
+            <nz-tag nzColor="success" data-testid="ping-message">
+              <nz-icon nzType="check-circle" nzTheme="outline" />
+              {{ result.data.message }}
+            </nz-tag>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Phiên bản API">{{
+            result.data.version
+          }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Thời gian máy chủ">
+            {{ result.data.serverTime | date: 'dd/MM/yyyy HH:mm:ss' : '+0700' }}
+          </nz-descriptions-item>
+        </nz-descriptions>
+      }
+    }
+  }
+</nz-card>
+
+<ng-template #reloadButton>
+  <button nz-button nzType="default" (click)="reload()" [nzLoading]="ping().status === 'loading'">
+    <nz-icon nzType="reload" />
+    Kiểm tra lại
+  </button>
+</ng-template>
