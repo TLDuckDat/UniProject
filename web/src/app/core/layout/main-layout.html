@@ -1,0 +1,90 @@
+<nz-layout class="layout">
+  <nz-sider
+    nzCollapsible
+    nzWidth="232px"
+    nzBreakpoint="lg"
+    [nzCollapsed]="thuGon()"
+    (nzCollapsedChange)="thuGon.set($event)"
+    [nzTrigger]="null"
+  >
+    <a class="logo" routerLink="/">
+      <nz-icon nzType="solution" nzTheme="outline" />
+      @if (!thuGon()) {
+        <span>UPM · ĐATN</span>
+      }
+    </a>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="thuGon()">
+      @for (item of menu(); track item.duongDan) {
+        <li
+          nz-menu-item
+          nzMatchRouter
+          [nzMatchRouterExact]="item.duongDan === '/'"
+          nz-tooltip
+          nzTooltipPlacement="right"
+          [nzTooltipTitle]="thuGon() ? item.nhan : ''"
+        >
+          <a [routerLink]="item.duongDan">
+            <nz-icon [nzType]="item.icon" nzTheme="outline" />
+            <span>{{ item.nhan }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nz-sider>
+
+  <nz-layout>
+    <nz-header class="header">
+      <button
+        type="button"
+        class="trigger"
+        [attr.aria-label]="thuGon() ? 'Mở rộng menu' : 'Thu gọn menu'"
+        (click)="thuGon.set(!thuGon())"
+      >
+        <nz-icon [nzType]="thuGon() ? 'menu-unfold' : 'menu-fold'" />
+      </button>
+
+      <span class="spacer"></span>
+
+      @let coSo = auth.coSoDangLamViec();
+      @if (auth.coSoDuocPhep().length > 1) {
+        <nz-select
+          class="co-so"
+          nzSize="small"
+          aria-label="Cơ sở đang làm việc"
+          [ngModel]="coSo?.id"
+          (ngModelChange)="chonCoSo($event)"
+        >
+          @for (c of auth.coSoDuocPhep(); track c.id) {
+            <nz-option [nzValue]="c.id" [nzLabel]="tenNganCoSo(c) + ' – ' + c.tenCoSo"></nz-option>
+          }
+        </nz-select>
+      } @else if (coSo) {
+        <nz-tag nzColor="blue" [title]="coSo.tenCoSo">
+          <nz-icon nzType="bank" />
+          {{ tenNganCoSo(coSo) }}
+        </nz-tag>
+      }
+
+      <a class="user" nz-dropdown [nzDropdownMenu]="userMenu" nzPlacement="bottomRight">
+        <nz-avatar nzIcon="user" nzSize="small" />
+        <span class="user-name">{{ tenHienThi() }}</span>
+        <nz-icon nzType="down" />
+      </a>
+      <nz-dropdown-menu #userMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item routerLink="/tai-khoan"><nz-icon nzType="user" /> Tài khoản của tôi</li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item tabindex="0" (click)="dangXuat()" (keydown.enter)="dangXuat()">
+            <nz-icon nzType="logout" /> Đăng xuất
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-header>
+
+    <nz-content class="content">
+      <router-outlet />
+    </nz-content>
+
+    <nz-footer class="footer">© Trường Đại học Giao thông Vận tải – UTC / UTC2</nz-footer>
+  </nz-layout>
+</nz-layout>

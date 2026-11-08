@@ -54,6 +54,7 @@ public static class ProblemDetailsSetup
         StatusCodes.Status403Forbidden => ErrorCodes.Forbidden,
         StatusCodes.Status404NotFound => ErrorCodes.NotFound,
         StatusCodes.Status409Conflict => ErrorCodes.Conflict,
+        StatusCodes.Status429TooManyRequests => ErrorCodes.TooManyRequests,
         >= 500 => ErrorCodes.Internal,
         _ => ErrorCodes.Unknown,
     };
@@ -67,6 +68,7 @@ public static class ProblemDetailsSetup
         StatusCodes.Status405MethodNotAllowed => "Phương thức không được hỗ trợ.",
         StatusCodes.Status409Conflict => "Dữ liệu bị xung đột, vui lòng tải lại và thử lại.",
         StatusCodes.Status422UnprocessableEntity => "Vi phạm quy định nghiệp vụ.",
+        StatusCodes.Status429TooManyRequests => "Bạn thao tác quá nhanh. Vui lòng thử lại sau ít phút.",
         >= 500 => "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.",
         _ => "Đã xảy ra lỗi.",
     };
@@ -75,5 +77,5 @@ public static class ProblemDetailsSetup
     private static bool IsDefaultEnglishTitle(string title) =>
         title.StartsWith("An error occurred", StringComparison.Ordinal)
         || title is "Bad Request" or "Unauthorized" or "Forbidden" or "Not Found" or "Method Not Allowed"
-            or "Conflict" or "Unprocessable Entity" or "Internal Server Error" or "Service Unavailable";
+            or "Conflict" or "Unprocessable Entity" or "Too Many Requests" or "Internal Server Error" or "Service Unavailable";
 }

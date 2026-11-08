@@ -1,0 +1,63 @@
+.layout {
+  min-height: 100vh;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 64px;
+  padding: 0 24px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+}
+
+.trigger {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 8px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.co-so {
+  min-width: 220px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+
+.user-name {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  margin: 24px;
+}
+
+.footer {
+  text-align: center;
+}

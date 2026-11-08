@@ -26,5 +26,11 @@ public static class DatabaseInitializer
         logger.LogInformation("Đang áp dụng migration cho cơ sở dữ liệu...");
         await db.Database.MigrateAsync(ct);
         logger.LogInformation("Đã áp dụng migration.");
+
+        // Dữ liệu mẫu chỉ bật ở Development (appsettings.Development.json).
+        if (configuration.GetValue<bool>("Database:SeedSampleData"))
+        {
+            await scope.ServiceProvider.GetRequiredService<Seed.DevDataSeeder>().SeedAsync(ct);
+        }
     }
 }

@@ -1,12 +1,49 @@
 import {
   ApiOutline,
+  BankOutline,
+  CalendarOutline,
   CheckCircleOutline,
   CloseCircleOutline,
+  DownOutline,
+  EyeInvisibleOutline,
+  EyeOutline,
+  FileTextOutline,
+  HomeOutline,
+  LockOutline,
+  LogoutOutline,
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  ProfileOutline,
   ReloadOutline,
+  SettingOutline,
+  SolutionOutline,
+  TeamOutline,
+  UserOutline,
 } from '@ant-design/icons-angular/icons';
 
 /**
  * Icon NG-ZORRO đăng ký tĩnh (tree-shaking, không tải động từ assets).
  * Thêm icon mới vào đây khi dùng `<nz-icon nzType="..." />`.
  */
-export const APP_ICONS = [ApiOutline, CheckCircleOutline, CloseCircleOutline, ReloadOutline];
+export const APP_ICONS = [
+  ApiOutline,
+  BankOutline,
+  CalendarOutline,
+  CheckCircleOutline,
+  CloseCircleOutline,
+  DownOutline,
+  EyeInvisibleOutline,
+  EyeOutline,
+  FileTextOutline,
+  HomeOutline,
+  LockOutline,
+  LogoutOutline,
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  ProfileOutline,
+  ReloadOutline,
+  SettingOutline,
+  SolutionOutline,
+  TeamOutline,
+  UserOutline,
+];

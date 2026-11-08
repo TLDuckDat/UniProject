@@ -21,7 +21,8 @@ module.exports = defineConfig([
     rules: {
       '@angular-eslint/directive-selector': [
         'error',
-        { type: 'attribute', prefix: 'app', style: 'camelCase' },
+        // 'co': directive phân quyền dạng *coQuyen (CLAUDE.md / Phần 3).
+        { type: 'attribute', prefix: ['app', 'co'], style: 'camelCase' },
       ],
       '@angular-eslint/component-selector': [
         'error',

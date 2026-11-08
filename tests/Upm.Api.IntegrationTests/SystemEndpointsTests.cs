@@ -6,7 +6,8 @@ using Upm.Application.SystemInfo;
 
 namespace Upm.Api.IntegrationTests;
 
-public sealed class SystemEndpointsTests(UpmApiFactory factory) : IClassFixture<UpmApiFactory>
+[Collection(SharedApiFixture.Name)]
+public sealed class SystemEndpointsTests(UpmApiFactory factory)
 {
     private readonly HttpClient _client = factory.CreateClient();
 
@@ -39,7 +40,12 @@ public sealed class SystemEndpointsTests(UpmApiFactory factory) : IClassFixture<
     [Fact]
     public async Task Route_khong_ton_tai_tra_ProblemDetails_tieng_Viet_co_code()
     {
-        var response = await _client.GetAsync("/api/v1/khong-ton-tai", TestContext.Current.CancellationToken);
+        // Chưa đăng nhập: fallback policy chặn trước (401) – không tiết lộ route nào tồn tại.
+        Assert.Equal(HttpStatusCode.Unauthorized,
+            (await _client.GetAsync("/api/v1/khong-ton-tai", TestContext.Current.CancellationToken)).StatusCode);
+
+        var (client, _, _) = await factory.DangNhapAsync("admin", TestContext.Current.CancellationToken);
+        var response = await client.GetAsync("/api/v1/khong-ton-tai", TestContext.Current.CancellationToken);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         Assert.Equal("application/problem+json", response.Content.Headers.ContentType?.MediaType);

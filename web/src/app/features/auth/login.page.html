@@ -1,0 +1,55 @@
+<div class="wrap">
+  <nz-card class="card">
+    <div class="brand">
+      <nz-icon nzType="solution" nzTheme="outline" class="brand-icon" />
+      <h1>Quản lý Đồ án tốt nghiệp</h1>
+      <p>Trường Đại học Giao thông Vận tải – UTC / UTC2</p>
+    </div>
+
+    <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="dangNhap()">
+      <nz-form-item>
+        <nz-form-label nzFor="tenDangNhap" nzRequired>Tên đăng nhập</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng nhập tên đăng nhập.">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              nz-input
+              id="tenDangNhap"
+              formControlName="tenDangNhap"
+              autocomplete="username"
+              placeholder="vd. pdt.hn"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="matKhau" nzRequired>Mật khẩu</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng nhập mật khẩu.">
+          <nz-input-group nzPrefixIcon="lock" [nzSuffix]="anHien">
+            <input
+              nz-input
+              id="matKhau"
+              formControlName="matKhau"
+              autocomplete="current-password"
+              [type]="hienMatKhau() ? 'text' : 'password'"
+            />
+          </nz-input-group>
+          <ng-template #anHien>
+            <button
+              type="button"
+              class="toggle"
+              [attr.aria-label]="hienMatKhau() ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'"
+              (click)="hienMatKhau.set(!hienMatKhau())"
+            >
+              <nz-icon [nzType]="hienMatKhau() ? 'eye-invisible' : 'eye'" />
+            </button>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button nz-button nzType="primary" nzBlock type="submit" [nzLoading]="dangGui()">
+        Đăng nhập
+      </button>
+    </form>
+  </nz-card>
+</div>

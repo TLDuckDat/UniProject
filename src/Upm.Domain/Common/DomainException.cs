@@ -9,8 +9,7 @@ public class DomainException : Exception
 {
     public const string CodePrefix = "UPM_";
 
-    public DomainException(string code, string message)
-        : base(message)
+    public DomainException(string code, string message) : base(message)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(code);
         ArgumentException.ThrowIfNullOrWhiteSpace(message);

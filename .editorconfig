@@ -40,6 +40,8 @@ dotnet_naming_style.underscore_camel.required_prefix = _
 
 # CA1848 (LoggerMessage delegate): log ở UPM không nằm trên hot path – giữ ILogger.LogXxx cho dễ đọc.
 dotnet_diagnostic.CA1848.severity = none
+# CA1873 (tham số log có thể tốn kém): cùng lý do với CA1848.
+dotnet_diagnostic.CA1873.severity = none
 # CA1707: tên test theo mã luật dùng dấu gạch dưới (vd. A03_No_dung_10_TC_van_duoc_giao).
 dotnet_diagnostic.CA1707.severity = none
 

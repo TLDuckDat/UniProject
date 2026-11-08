@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Upm.Application.SystemInfo;
 
@@ -5,6 +6,7 @@ namespace Upm.Api.Controllers;
 
 /// <summary>Kiểm tra kết nối API (không cần đăng nhập).</summary>
 [ApiController]
+[AllowAnonymous]
 [Route("api/v1/ping")]
 [Tags("System")]
 public sealed class PingController(ISystemInfoService systemInfo) : ControllerBase

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Upm.Application.XacThuc;
 using Upm.Domain.Common;
 
 namespace Upm.Api.Errors;
@@ -19,6 +20,28 @@ internal sealed class GlobalExceptionHandler(
 
         switch (exception)
         {
+            case TamKhoaDangNhapException khoa:
+                problem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status429TooManyRequests,
+                    Title = ProblemDetailsSetup.DefaultTitle(StatusCodes.Status429TooManyRequests),
+                    Detail = khoa.Message,
+                };
+                problem.Extensions[ProblemDetailsSetup.CodeKey] = khoa.Code;
+                httpContext.Response.Headers.RetryAfter =
+                    ((int)Math.Ceiling(khoa.ThuLaiSau.TotalSeconds)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                break;
+
+            case XacThucException auth:
+                problem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status401Unauthorized,
+                    Title = ProblemDetailsSetup.DefaultTitle(StatusCodes.Status401Unauthorized),
+                    Detail = auth.Message,
+                };
+                problem.Extensions[ProblemDetailsSetup.CodeKey] = auth.Code;
+                break;
+
             case DomainException domain:
                 logger.LogWarning("Vi phạm nghiệp vụ {Code}: {Message}", domain.Code, domain.Message);
                 problem = new ProblemDetails

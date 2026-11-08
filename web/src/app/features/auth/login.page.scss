@@ -1,0 +1,40 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+  background: linear-gradient(135deg, #001529 0%, #1d3a5f 100%);
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 8px 0 4px;
+    font-size: 20px;
+  }
+
+  p {
+    margin: 0;
+    color: rgb(0 0 0 / 45%);
+  }
+}
+
+.brand-icon {
+  font-size: 40px;
+  color: #1677ff;
+}
+
+.toggle {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}

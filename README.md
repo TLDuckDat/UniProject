@@ -32,7 +32,7 @@ dotnet run --project src/Upm.Api
 #   → API:      http://localhost:5080
 #   → Swagger:  http://localhost:5080/swagger
 #   → Health:   http://localhost:5080/health
-#   → Hangfire: http://localhost:5080/hangfire (chỉ môi trường Development)
+#   → Hangfire: http://localhost:5080/hangfire?access_token=<token của admin> (chỉ vai trò QuanTri)
 
 # 3. Frontend (terminal khác)
 cd web
@@ -40,10 +40,42 @@ npm ci
 npm start                     # http://localhost:4200 – proxy /api sang http://localhost:5080
 ```
 
-Mở http://localhost:4200: trang chủ gọi `GET /api/v1/ping` và hiển thị **pong**, phiên bản API, thời gian máy chủ.
+Mở http://localhost:4200 → trang đăng nhập. Đăng nhập bằng một tài khoản dev bên dưới; trang chủ gọi
+`GET /api/v1/ping` và hiển thị **pong**, phiên bản API, thời gian máy chủ.
 
 > Ở môi trường Development, API tự chạy migration khi khởi động (`Database:MigrateOnStartup = true`)
-> nên database `Upm` được tạo tự động.
+> và nạp dữ liệu mẫu + tài khoản dev (`Database:SeedSampleData = true`).
+
+## Tài khoản dev (CHỈ môi trường Development)
+
+Mật khẩu chung: **`Upm@123456`**
+
+| Tên đăng nhập | Vai trò | Phạm vi dữ liệu |
+|---|---|---|
+| `admin` | Quản trị hệ thống | Toàn hệ thống |
+| `pdt.hn` | Phòng Đào tạo | Cơ sở HN |
+| `pdt.hcm` | Phòng Đào tạo | Cơ sở HCM (UTC2) |
+| `pdt.2coso` | Phòng Đào tạo | HN + HCM (chuyển cơ sở trên header) |
+| `ldk.ct.hn` | Lãnh đạo Khoa | Khoa Công trình – HN |
+| `tbm.cau.hn` | Trưởng Bộ môn (gắn GV001) | Bộ môn Cầu hầm – HN |
+| `giaovu.ct.hn` | Giáo vụ | Khoa Công trình – HN |
+| `gv001` | Giảng viên (GV001) | Khoa Công trình – HN |
+| `gv003` | Giảng viên (GV003) | Khoa Kinh tế – HN |
+| `gv004` | Giảng viên (GV004) | Khoa Công trình – HCM |
+| `sv.65hn001` | Sinh viên (65HN001) | Bản thân |
+| `thuvien.hn` | Thư viện | Cơ sở HN |
+
+Gọi API từ Swagger: `POST /api/v1/auth/login` → copy `accessToken` → nút **Authorize**.
+
+Dashboard Hangfire (`/hangfire`): chỉ vai trò **QuanTri**. Mở `http://localhost:5080/hangfire?access_token=<accessToken của admin>`
+một lần; token được chuyển vào cookie HttpOnly cho các trang sau. Ngoài Development dashboard tắt, bật bằng
+`Hangfire:DashboardEnabled = true`.
+
+Đăng nhập sai 5 lần / 15 phút → tạm khóa tài khoản đó **trên IP đó** (429); giới hạn chung 300 lần đăng nhập/IP/phút
+(SV dùng chung IP NAT). Tham số ở mục `XacThuc` của appsettings. Sau reverse proxy, khai báo IP proxy ở
+`ForwardedHeaders:KnownProxies` / `KnownNetworks` để lấy đúng IP người dùng.
+Khóa ký JWT dev nằm trong `appsettings.Development.json`; môi trường khác BẮT BUỘC đặt `Jwt:SigningKey`
+(≥ 32 byte) qua user-secrets / biến môi trường `Jwt__SigningKey`, nếu không API sẽ không khởi động.
 
 ## Lệnh thường dùng
 

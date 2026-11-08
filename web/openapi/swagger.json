@@ -6,6 +6,54 @@
     "version": "v1"
   },
   "paths": {
+    "/api/v1/sinh-vien": {
+      "get": {
+        "tags": [
+          "SinhVien"
+        ],
+        "summary": "Danh sách sinh viên trong phạm vi được phép, có tìm kiếm theo mã/họ tên.",
+        "operationId": "danhSachSinhVien",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienListItemPagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/ping": {
       "get": {
         "tags": [
@@ -36,10 +84,252 @@
           }
         }
       }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "XacThuc"
+        ],
+        "summary": "Đăng nhập bằng tên đăng nhập + mật khẩu.",
+        "operationId": "dangNhap",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "tags": [
+          "XacThuc"
+        ],
+        "summary": "Cấp access token mới từ refresh token trong cookie (xoay vòng refresh token).",
+        "operationId": "lamMoi",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "XacThuc"
+        ],
+        "summary": "Thu hồi refresh token hiện tại và xóa cookie.",
+        "operationId": "dangXuat",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "tags": [
+          "XacThuc"
+        ],
+        "summary": "Thông tin người dùng hiện tại: vai trò + phạm vi, quyền, các cơ sở được làm việc.",
+        "operationId": "toi",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDungResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "CoSoResponse": {
+        "required": [
+          "id",
+          "maCoSo",
+          "tenCoSo"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "maCoSo": {
+            "type": "string"
+          },
+          "tenCoSo": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DangNhapRequest": {
+        "required": [
+          "matKhau",
+          "tenDangNhap"
+        ],
+        "type": "object",
+        "properties": {
+          "tenDangNhap": {
+            "type": "string"
+          },
+          "matKhau": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NguoiDungResponse": {
+        "required": [
+          "coSoDuocPhep",
+          "id",
+          "quyen",
+          "tenDangNhap",
+          "vaiTro"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tenDangNhap": {
+            "type": "string"
+          },
+          "hoTen": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "giangVienId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "sinhVienId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "vaiTro": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PhamViResponse"
+            }
+          },
+          "quyen": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "coSoDuocPhep": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CoSoResponse"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhamViResponse": {
+        "required": [
+          "maVaiTro",
+          "tenVaiTro"
+        ],
+        "type": "object",
+        "properties": {
+          "maVaiTro": {
+            "type": "string"
+          },
+          "tenVaiTro": {
+            "type": "string"
+          },
+          "coSoId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "maCoSo": {
+            "type": "string",
+            "nullable": true
+          },
+          "khoaId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "tenKhoa": {
+            "type": "string",
+            "nullable": true
+          },
+          "boMonId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "tenBoMon": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PingResponse": {
         "required": [
           "message",
@@ -87,12 +377,124 @@
           }
         },
         "additionalProperties": {}
+      },
+      "SinhVienListItem": {
+        "required": [
+          "hoTen",
+          "id",
+          "khoaHoc",
+          "maCoSo",
+          "maCTDT",
+          "maSV",
+          "tenKhoa",
+          "trangThaiHocTap"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "maSV": {
+            "type": "string"
+          },
+          "hoTen": {
+            "type": "string"
+          },
+          "khoaHoc": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maCoSo": {
+            "type": "string"
+          },
+          "tenKhoa": {
+            "type": "string"
+          },
+          "maCTDT": {
+            "type": "string"
+          },
+          "trangThaiHocTap": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SinhVienListItemPagedResult": {
+        "required": [
+          "items",
+          "page",
+          "pageSize",
+          "total"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SinhVienListItem"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TokenResponse": {
+        "required": [
+          "accessToken",
+          "hetHanLuc",
+          "nguoiDung"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "hetHanLuc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nguoiDung": {
+            "$ref": "#/components/schemas/NguoiDungResponse"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Access token (JWT) từ POST /api/v1/auth/login.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
   "tags": [
     {
+      "name": "SinhVien"
+    },
+    {
       "name": "System"
+    },
+    {
+      "name": "XacThuc"
     }
   ]
 }
