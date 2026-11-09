@@ -1,5 +1,6 @@
 using System.Net;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +17,7 @@ using Upm.Application;
 using Upm.Infrastructure;
 using Upm.Infrastructure.Identity;
 using Upm.Infrastructure.Persistence;
+using Upm.Infrastructure.TienDo;
 
 const string WebCorsPolicy = "web";
 
@@ -89,7 +91,11 @@ builder.Services.AddRateLimiter(options =>
 });
 
 // ---------- Web API ----------
-builder.Services.AddControllers();
+// Enum ra/vào JSON dạng chuỗi (TrangThaiSVTrongDot, LoaiNo…) – khớp cách lưu DB (CLAUDE.md §6) và để FE/OpenAPI đọc được.
+// Vẫn nhận số khi đọc (AllowIntegerValues mặc định) nên client cũ không vỡ.
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.ConfigureHttpJsonOptions(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddUpmProblemDetails();
 
 builder.Services.AddCors(options => options.AddPolicy(WebCorsPolicy, policy => policy
@@ -160,6 +166,17 @@ app.UseRateLimiter();
 
 app.MapHealthChecks("/health").AllowAnonymous();
 app.MapControllers();
+
+// UC-3a: nhắc việc tiến độ hằng ngày (Hangfire). Bỏ qua khi test – test gọi job trực tiếp, không phụ thuộc lịch.
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    // IRecurringJobManager (DI): RecurringJob tĩnh cần JobStorage.Current, không được đặt khi dùng DI.
+    app.Services.GetRequiredService<IRecurringJobManager>().AddOrUpdate<NhacViecHangfireJob>(
+        NhacViecHangfireJob.IdLich,
+        job => job.ChayAsync(CancellationToken.None),
+        Cron.Daily(1),
+        new RecurringJobOptions { TimeZone = TimeZoneInfo.FindSystemTimeZoneById(app.Configuration["Clock:TimeZone"] ?? "Asia/Ho_Chi_Minh") });
+}
 
 // Dashboard Hangfire: mặc định chỉ bật ở Development; môi trường khác bật bằng Hangfire:DashboardEnabled = true.
 // Chỉ vai trò QuanTri (HangfireQuanTriFilter); AllowAnonymous để Hangfire tự trả 401/403 qua filter của nó.

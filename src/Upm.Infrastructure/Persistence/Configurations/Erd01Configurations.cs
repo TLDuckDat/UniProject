@@ -66,6 +66,7 @@ internal sealed class SinhVienConfiguration : IEntityTypeConfiguration<SinhVien>
         b.Property(x => x.MaSV).Str(20);
         b.Property(x => x.HoTen).Str(100);
         b.Property(x => x.Email).Str(150);
+        b.Property(x => x.NguonDongBo).Str(30);
         b.HasFk(x => x.CTDT, x => x.CTDTId);
         b.HasFk(x => x.CoSo, x => x.CoSoId);
         b.HasIndex(x => x.MaSV).IsUnique();

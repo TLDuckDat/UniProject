@@ -45,6 +45,10 @@ public class UpmDbContext(DbContextOptions<UpmDbContext> options) : DbContext(op
     public DbSet<BaoCaoTienDo> BaoCaoTienDo => Set<BaoCaoTienDo>();
     public DbSet<DangKyNguyenVong> DangKyNguyenVong => Set<DangKyNguyenVong>();
     public DbSet<PhanCong> PhanCong => Set<PhanCong>();
+    public DbSet<KhaiBaoXungDot> KhaiBaoXungDot => Set<KhaiBaoXungDot>();
+    public DbSet<TepDinhKem> TepDinhKem => Set<TepDinhKem>();
+    public DbSet<ThongBao> ThongBao => Set<ThongBao>();
+    public DbSet<LichNhacViec> LichNhacViec => Set<LichNhacViec>();
     public DbSet<PhieuGiaoNhiemVu> PhieuGiaoNhiemVu => Set<PhieuGiaoNhiemVu>();
 
     // ERD-05 · Quyển, đọc duyệt, đạo văn
@@ -69,7 +73,6 @@ public class UpmDbContext(DbContextOptions<UpmDbContext> options) : DbContext(op
     public DbSet<DonTu> DonTu => Set<DonTu>();
     public DbSet<LichSuTrangThai> LichSuTrangThai => Set<LichSuTrangThai>();
     public DbSet<AuditLog> AuditLog => Set<AuditLog>();
-    public DbSet<LichNhacViec> LichNhacViec => Set<LichNhacViec>();
 
     // Bổ sung Phần 3 · Xác thực
     public DbSet<RefreshToken> RefreshToken => Set<RefreshToken>();

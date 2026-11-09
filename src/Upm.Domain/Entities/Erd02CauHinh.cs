@@ -93,6 +93,7 @@ public class ThongTinTienDoSV : Entity
     public DateOnly HanToiDa { get; set; }
     public bool DungTienDo { get; set; }
     public DateTime DongBoLuc { get; set; }
+    public string? NguonDongBo { get; set; }
 }
 
 /// <summary>Đồng bộ từ QLĐT – hệ thống ĐATN chỉ đọc. Không có cột audit – đã có DongBoLuc.</summary>
@@ -123,4 +124,6 @@ public class KyLuatSV : Entity
     public bool DinhChiHocTap { get; set; }
     public bool TruyCuuHinhSu { get; set; }
     public string NguonCTSV { get; set; } = string.Empty;
+    public string? NguonDongBo { get; set; }
+    public DateTime? DongBoLuc { get; set; }
 }

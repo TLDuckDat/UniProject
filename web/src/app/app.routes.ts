@@ -39,7 +39,8 @@ export const routes: Routes = [
           ...menu('Đợt ĐATN & xét điều kiện', 'calendar', 10),
           quyen: [Quyen.DotQuanLy, Quyen.XetDieuKienChay],
         },
-        loadComponent: dangXayDung,
+        loadChildren: () =>
+          import('./features/dot-datn/dot-datn.routes').then((m) => m.DOT_DATN_ROUTES),
       },
       {
         path: 'de-tai',
@@ -49,7 +50,7 @@ export const routes: Routes = [
           ...menu('Đề tài & phân công', 'file-text', 20),
           quyen: [Quyen.DeTaiDeXuat, Quyen.DeTaiDuyet, Quyen.PhanCongQuanLy],
         },
-        loadComponent: dangXayDung,
+        loadChildren: () => import('./features/de-tai/de-tai.routes').then((m) => m.DE_TAI_ROUTES),
       },
       {
         path: 'hoi-dong',
@@ -62,11 +63,32 @@ export const routes: Routes = [
         loadComponent: dangXayDung,
       },
       {
+        path: 'tien-do',
+        title: 'Tiến độ ĐATN – UPM',
+        canActivate: [roleGuard],
+        data: {
+          ...menu('Tiến độ 3 mốc', 'calendar', 35),
+          quyen: [Quyen.HoSoCuaToi, Quyen.DeTaiDeXuat, Quyen.PhanCongQuanLy],
+        },
+        loadChildren: () =>
+          import('./features/tien-do/tien-do.routes').then((m) => m.TIEN_DO_ROUTES),
+      },
+      {
+        path: 'quyen',
+        title: 'Nộp & đọc quyển – UPM',
+        canActivate: [roleGuard],
+        data: {
+          ...menu('Nộp & đọc quyển', 'file-text', 36),
+          quyen: [Quyen.HoSoCuaToi, Quyen.DeTaiDeXuat, Quyen.PhanCongQuanLy],
+        },
+        loadChildren: () => import('./features/quyen/quyen.routes').then((m) => m.QUYEN_ROUTES),
+      },
+      {
         path: 'ho-so',
         title: 'Hồ sơ ĐATN của tôi – UPM',
         canActivate: [roleGuard],
         data: { ...menu('Hồ sơ ĐATN của tôi', 'profile', 40), quyen: [Quyen.HoSoCuaToi] },
-        loadComponent: dangXayDung,
+        loadChildren: () => import('./features/ho-so/ho-so.routes').then((m) => m.HO_SO_ROUTES),
       },
       {
         path: 'quan-tri',
@@ -76,7 +98,8 @@ export const routes: Routes = [
           ...menu('Quản trị hệ thống', 'setting', 80),
           quyen: [Quyen.TaiKhoanQuanLy, Quyen.RuleSetQuanLy, Quyen.DanhMucQuanLy],
         },
-        loadComponent: dangXayDung,
+        loadChildren: () =>
+          import('./features/quan-tri/quan-tri.routes').then((m) => m.QUAN_TRI_ROUTES),
       },
       {
         path: 'tai-khoan',

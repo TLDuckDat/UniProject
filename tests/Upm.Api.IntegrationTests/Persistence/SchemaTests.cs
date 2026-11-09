@@ -22,7 +22,7 @@ public sealed class SchemaTests(UpmApiFactory factory)
         // ERD-03
         "DotDATN", "SVTrongDot", "XetDieuKien", "XetDieuKienChiTiet",
         // ERD-04
-        "MocTienDo", "DeTai", "BaoCaoTienDo", "DangKyNguyenVong", "PhanCong", "PhieuGiaoNhiemVu",
+        "MocTienDo", "DeTai", "BaoCaoTienDo", "DangKyNguyenVong", "PhanCong", "PhieuGiaoNhiemVu", "KhaiBaoXungDot", "TepDinhKem", "ThongBao",
         // ERD-05
         "PhienBanQuyen", "YKienGVHD", "KetQuaDocDuyet", "KetQuaKiemTraDaoVan", "LuuTruThuVien",
         // ERD-06
@@ -73,7 +73,7 @@ public sealed class SchemaTests(UpmApiFactory factory)
             "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME <> '__EFMigrationsHistory'",
             r => r.GetString(0));
 
-        Assert.Equal(46 + 1, ExpectedTables.Length);
+        Assert.Equal(46 + 4, ExpectedTables.Length); // 46 thiết kế + RefreshToken (Phần 3) + KhaiBaoXungDot (UC-2) + TepDinhKem, ThongBao (UC-3a)
         Assert.Equal(ExpectedTables.Order(StringComparer.Ordinal), actual.Order(StringComparer.Ordinal));
     }
 

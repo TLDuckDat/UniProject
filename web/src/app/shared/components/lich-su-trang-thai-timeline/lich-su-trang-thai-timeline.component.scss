@@ -1,0 +1,20 @@
+.entry {
+  padding-bottom: 12px;
+}
+
+.entry-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.transition,
+.reason {
+  margin: 4px 0;
+}
+
+small,
+time {
+  color: #6b7280;
+}

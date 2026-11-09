@@ -8,6 +8,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <PackageReference Include="Hangfire.AspNetCore" />
     <PackageReference Include="Hangfire.SqlServer" />
+    <PackageReference Include="MailKit" />
+    <PackageReference Include="QuestPDF" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Upm.Application\Upm.Application.csproj" />

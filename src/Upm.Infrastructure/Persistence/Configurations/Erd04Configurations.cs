@@ -58,6 +58,18 @@ internal sealed class DangKyNguyenVongConfiguration : IEntityTypeConfiguration<D
     }
 }
 
+internal sealed class KhaiBaoXungDotConfiguration : IEntityTypeConfiguration<KhaiBaoXungDot>
+{
+    public void Configure(EntityTypeBuilder<KhaiBaoXungDot> b)
+    {
+        b.ToUpmTable("KhaiBaoXungDot");
+        b.Property(x => x.LyDo).Str(300);
+        b.HasFk(x => x.GiangVien, x => x.GiangVienId);
+        b.HasFk(x => x.SinhVien, x => x.SinhVienId);
+        b.HasIndex(x => new { x.GiangVienId, x.SinhVienId }).IsUnique();
+    }
+}
+
 internal sealed class PhanCongConfiguration : IEntityTypeConfiguration<PhanCong>
 {
     public void Configure(EntityTypeBuilder<PhanCong> b)

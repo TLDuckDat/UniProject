@@ -18,6 +18,9 @@
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.14" />
     <PackageVersion Include="Hangfire.AspNetCore" Version="1.8.25" />
     <PackageVersion Include="Hangfire.SqlServer" Version="1.8.25" />
+    <!-- UC-3a: gửi email (SMTP → Mailpit khi dev), xuất PDF phiếu giao nhiệm vụ -->
+    <PackageVersion Include="MailKit" Version="4.18.2" />
+    <PackageVersion Include="QuestPDF" Version="2026.9.1" />
     <!-- Ghim bản vá cho package bắc cầu (Hangfire kéo Newtonsoft.Json 11, SqlClient kéo Pkcs 9.0.11) -->
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />

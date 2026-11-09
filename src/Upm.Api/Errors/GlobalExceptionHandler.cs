@@ -7,7 +7,7 @@ namespace Upm.Api.Errors;
 
 /// <summary>
 /// Chuyển mọi exception chưa bắt thành ProblemDetails.
-/// <see cref="DomainException"/> → 422 kèm <c>code</c> nghiệp vụ; lỗi khác → 500 (không lộ chi tiết ra ngoài môi trường dev).
+/// <see cref="DomainException"/> → 422 kèm <c>code</c> nghiệp vụ, hoặc 403 nếu là mã từ chối quyền (<see cref="DomainException.LaLoiTuChoiQuyen"/>); lỗi khác → 500 (không lộ chi tiết ra ngoài môi trường dev).
 /// </summary>
 internal sealed class GlobalExceptionHandler(
     IProblemDetailsService problemDetailsService,
@@ -43,11 +43,14 @@ internal sealed class GlobalExceptionHandler(
                 break;
 
             case DomainException domain:
-                logger.LogWarning("Vi phạm nghiệp vụ {Code}: {Message}", domain.Code, domain.Message);
+                var status = DomainException.LaLoiTuChoiQuyen(domain.Code)
+                    ? StatusCodes.Status403Forbidden
+                    : StatusCodes.Status422UnprocessableEntity;
+                logger.LogWarning("Vi phạm nghiệp vụ {Code} ({Status}): {Message}", domain.Code, status, domain.Message);
                 problem = new ProblemDetails
                 {
-                    Status = StatusCodes.Status422UnprocessableEntity,
-                    Title = ProblemDetailsSetup.DefaultTitle(StatusCodes.Status422UnprocessableEntity),
+                    Status = status,
+                    Title = ProblemDetailsSetup.DefaultTitle(status),
                     Detail = domain.Message,
                 };
                 problem.Extensions[ProblemDetailsSetup.CodeKey] = domain.Code;

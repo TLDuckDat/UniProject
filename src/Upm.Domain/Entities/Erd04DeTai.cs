@@ -57,6 +57,9 @@ public class BaoCaoTienDo : AuditableEntity
     public decimal? DiemTienDo { get; set; }
     public KetQuaTienDo KetQua { get; set; }
     public DateTime? CanhBaoGuiLuc { get; set; }
+    /// <summary>C07: SV xác nhận không dùng AI viết hộ / bịa số liệu khi nộp báo cáo (UC-3a).</summary>
+    public bool CamKetAI { get; set; }
+    public DateTime? ThoiDiemCamKetAI { get; set; }
 }
 
 public class DangKyNguyenVong : AuditableEntity
@@ -68,6 +71,16 @@ public class DangKyNguyenVong : AuditableEntity
     public byte ThuTuNguyenVong { get; set; }
     public TrangThaiNguyenVong TrangThai { get; set; }
     public DateTime NgayDangKy { get; set; }
+}
+
+/// <summary>GV tự khai báo xung đột lợi ích với một SV (B07). Không có trong thiet-ke.md – bổ sung khi làm UC-2.</summary>
+public class KhaiBaoXungDot : AuditableEntity
+{
+    public long GiangVienId { get; set; }
+    public GiangVien GiangVien { get; set; } = null!;
+    public long SinhVienId { get; set; }
+    public SinhVien SinhVien { get; set; } = null!;
+    public string? LyDo { get; set; }
 }
 
 /// <summary>Vai trò GV trên từng SV. Chặn cứng GVHD = GVĐD (B06).</summary>

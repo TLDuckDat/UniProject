@@ -142,6 +142,9 @@ namespace Upm.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool>("CamKetAI")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("CanhBaoGuiLuc")
                         .HasColumnType("datetime2");
 
@@ -183,6 +186,9 @@ namespace Upm.Infrastructure.Persistence.Migrations
 
                     b.Property<long>("SVTrongDotId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ThoiDiemCamKetAI")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("TyLeHoanThanhPct")
                         .HasPrecision(5, 2)
@@ -1230,6 +1236,52 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.ToTable("KetQuaKiemTraDaoVan", (string)null);
                 });
 
+            modelBuilder.Entity("Upm.Domain.Entities.KhaiBaoXungDot", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("GiangVienId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LyDo")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime?>("NgaySua")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayTao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<long?>("NguoiSuaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("NguoiTaoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SinhVienId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NguoiSuaId");
+
+                    b.HasIndex("NguoiTaoId");
+
+                    b.HasIndex("SinhVienId");
+
+                    b.HasIndex("GiangVienId", "SinhVienId")
+                        .IsUnique();
+
+                    b.ToTable("KhaiBaoXungDot", (string)null);
+                });
+
             modelBuilder.Entity("Upm.Domain.Entities.Khoa", b =>
                 {
                     b.Property<long>("Id")
@@ -1296,6 +1348,9 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.Property<bool>("DinhChiHocTap")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DongBoLuc")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("MucKyLuat")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -1303,6 +1358,10 @@ namespace Upm.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("NguonCTSV")
                         .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("NguonDongBo")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -1435,9 +1494,10 @@ namespace Upm.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("NguoiTaoId");
 
-                    b.HasIndex("SVTrongDotId");
-
                     b.HasIndex("DaGui", "HanNgay");
+
+                    b.HasIndex("SVTrongDotId", "LoaiNhac", "HanNgay")
+                        .IsUnique();
 
                     b.ToTable("LichNhacViec", (string)null);
                 });
@@ -2395,6 +2455,9 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.Property<long>("CoSoId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime?>("DongBoLuc")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -2431,6 +2494,10 @@ namespace Upm.Infrastructure.Persistence.Migrations
 
                     b.Property<long?>("NguoiTaoId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("NguonDongBo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("TrangThaiHocTap")
                         .IsRequired()
@@ -2574,6 +2641,62 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.HasIndex("VaiTroId");
 
                     b.ToTable("TaiKhoanVaiTro", (string)null);
+                });
+
+            modelBuilder.Entity("Upm.Domain.Entities.TepDinhKem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DuongDan")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<string>("HashSHA256")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<long>("KichThuocByte")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("NgaySua")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayTao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<long?>("NguoiSuaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("NguoiTaoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TenGoc")
+                        .IsRequired()
+                        .HasMaxLength(260)
+                        .HasColumnType("nvarchar(260)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HashSHA256");
+
+                    b.HasIndex("NguoiSuaId");
+
+                    b.HasIndex("NguoiTaoId");
+
+                    b.ToTable("TepDinhKem", (string)null);
                 });
 
             modelBuilder.Entity("Upm.Domain.Entities.ThamSoBoMon", b =>
@@ -2749,6 +2872,55 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.ToTable("ThanhVienHoiDong", (string)null);
                 });
 
+            modelBuilder.Entity("Upm.Domain.Entities.ThongBao", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("DaDoc")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("NgaySua")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayTao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<long?>("NguoiSuaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("NguoiTaoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NoiDung")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<long>("TaiKhoanId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TieuDe")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NguoiSuaId");
+
+                    b.HasIndex("NguoiTaoId");
+
+                    b.HasIndex("TaiKhoanId", "DaDoc");
+
+                    b.ToTable("ThongBao", (string)null);
+                });
+
             modelBuilder.Entity("Upm.Domain.Entities.ThongTinTienDoSV", b =>
                 {
                     b.Property<long>("Id")
@@ -2770,6 +2942,10 @@ namespace Upm.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("NguonDongBo")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<long>("SinhVienId")
                         .HasColumnType("bigint");
@@ -2940,6 +3116,10 @@ namespace Upm.Infrastructure.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("MaNgoaiLe")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<DateTime?>("NgaySua")
                         .HasColumnType("datetime2");
 
@@ -3007,6 +3187,14 @@ namespace Upm.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LyDo")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("MaNgoaiLe")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime?>("NgaySua")
                         .HasColumnType("datetime2");
@@ -3591,6 +3779,35 @@ namespace Upm.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("PhienBanQuyen");
+                });
+
+            modelBuilder.Entity("Upm.Domain.Entities.KhaiBaoXungDot", b =>
+                {
+                    b.HasOne("Upm.Domain.Entities.GiangVien", "GiangVien")
+                        .WithMany()
+                        .HasForeignKey("GiangVienId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", null)
+                        .WithMany()
+                        .HasForeignKey("NguoiSuaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", null)
+                        .WithMany()
+                        .HasForeignKey("NguoiTaoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Upm.Domain.Entities.SinhVien", "SinhVien")
+                        .WithMany()
+                        .HasForeignKey("SinhVienId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GiangVien");
+
+                    b.Navigation("SinhVien");
                 });
 
             modelBuilder.Entity("Upm.Domain.Entities.Khoa", b =>
@@ -4195,6 +4412,19 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.Navigation("VaiTro");
                 });
 
+            modelBuilder.Entity("Upm.Domain.Entities.TepDinhKem", b =>
+                {
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", null)
+                        .WithMany()
+                        .HasForeignKey("NguoiSuaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", null)
+                        .WithMany()
+                        .HasForeignKey("NguoiTaoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Upm.Domain.Entities.ThamSoBoMon", b =>
                 {
                     b.HasOne("Upm.Domain.Entities.BoMon", "BoMon")
@@ -4286,6 +4516,27 @@ namespace Upm.Infrastructure.Persistence.Migrations
                     b.Navigation("HoiDong");
 
                     b.Navigation("ThayTheCho");
+                });
+
+            modelBuilder.Entity("Upm.Domain.Entities.ThongBao", b =>
+                {
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", null)
+                        .WithMany()
+                        .HasForeignKey("NguoiSuaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", null)
+                        .WithMany()
+                        .HasForeignKey("NguoiTaoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Upm.Domain.Entities.TaiKhoan", "TaiKhoan")
+                        .WithMany()
+                        .HasForeignKey("TaiKhoanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TaiKhoan");
                 });
 
             modelBuilder.Entity("Upm.Domain.Entities.ThongTinTienDoSV", b =>

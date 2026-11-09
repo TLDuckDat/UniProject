@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Upm.Application.Abstractions;
 using Upm.Domain.Entities;
 using Upm.Domain.Enums;
+using Upm.Domain.Rules;
 
 namespace Upm.Infrastructure.Persistence.Seed;
 
@@ -17,6 +18,12 @@ namespace Upm.Infrastructure.Persistence.Seed;
 public sealed class DevDataSeeder(UpmDbContext db, IClock clock, IPasswordHasher<TaiKhoan> hasher, ILogger<DevDataSeeder> logger)
 {
     private const string NguonSeed = "SEED";
+
+    /// <summary>
+    /// Kỳ xét mẫu của đợt ĐATN dùng khi thử kịch bản (năm học 2026-2027, HK1). Đợt ở kỳ này cho đúng kết quả A01–A14
+    /// với dữ liệu dưới đây (kỷ luật mẫu hiệu lực 01/09/2026–30/06/2027).
+    /// </summary>
+    internal static readonly HocKy KyXetMau = new(2026, 1);
 
     /// <summary>Mật khẩu chung của mọi tài khoản dev – CHỈ Development.</summary>
     public const string MatKhauDev = "Upm@123456";
@@ -44,6 +51,8 @@ public sealed class DevDataSeeder(UpmDbContext db, IClock clock, IPasswordHasher
         ("gv003", "GiangVien", ["HN/KT"], "GV003", null),
         ("gv004", "GiangVien", ["HCM/CT"], "GV004", null),
         ("sv.65hn001", "SinhVien", ["HN"], null, "65HN001"),
+        ("sv.65hn004", "SinhVien", ["HN"], null, "65HN004"),
+        ("sv.65hn005", "SinhVien", ["HN"], null, "65HN005"),
         ("thuvien.hn", "ThuVien", ["HN"], null, null),
     ];
 
@@ -256,10 +265,17 @@ public sealed class DevDataSeeder(UpmDbContext db, IClock clock, IPasswordHasher
 
             var plan = laKyThuat ? HocPhanCatalog.KeHoachKyThuat : HocPhanCatalog.KeHoachKinhTe;
             var kyCuoi = plan.Max(p => p.HocKy);
+            var kyCuoiKeHoach = TenHocKy(nhapHoc.Year, kyCuoi);
+            // Rule engine xác định "đúng tiến độ" = kỳ xét ≤ KyCuoiKeHoach (Phần 4). SV kịch bản trễ tiến độ (A07) phải có
+            // kỳ cuối kế hoạch TRƯỚC kỳ xét mẫu, nếu không thì cờ DungTienDo = false và kết quả xét mâu thuẫn nhau.
+            if (!s.DungTienDo && HocKy.Parse(kyCuoiKeHoach) >= KyXetMau)
+            {
+                kyCuoiKeHoach = new HocKy(KyXetMau.NamHoc - 1, 2).ToString(); // HK2 năm học trước kỳ xét mẫu
+            }
             db.ThongTinTienDoSV.Add(new ThongTinTienDoSV
             {
                 SinhVienId = sv.Id,
-                KyCuoiKeHoach = TenHocKy(nhapHoc.Year, kyCuoi),
+                KyCuoiKeHoach = kyCuoiKeHoach,
                 HanToiDa = nhapHoc.AddYears(soNamChuan * 2), // 2 × thời gian chuẩn
                 DungTienDo = s.DungTienDo,
                 DongBoLuc = now,

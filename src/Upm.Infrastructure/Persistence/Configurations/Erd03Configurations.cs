@@ -48,6 +48,7 @@ internal sealed class XetDieuKienConfiguration : IEntityTypeConfiguration<XetDie
         b.Property(x => x.KetQua).Str(40);
         b.Property(x => x.GpaTichLuy).HasPrecision(3, 2);
         b.Property(x => x.LyDo).Str(500);
+        b.Property(x => x.MaNgoaiLe).Str(10);
         b.HasFk(x => x.SVTrongDot, x => x.SVTrongDotId);
         b.HasFk(x => x.RuleSet, x => x.RuleSetId);
         b.HasFk(x => x.NguoiChay, x => x.NguoiChayId);
@@ -60,6 +61,8 @@ internal sealed class XetDieuKienChiTietConfiguration : IEntityTypeConfiguration
     public void Configure(EntityTypeBuilder<XetDieuKienChiTiet> b)
     {
         b.ToUpmTable("XetDieuKienChiTiet");
+        b.Property(x => x.MaNgoaiLe).Str(10);
+        b.Property(x => x.LyDo).Str(300);
         b.HasFk(x => x.XetDieuKien, x => x.XetDieuKienId, k => k.ChiTiets);
         b.HasFk(x => x.HocPhan, x => x.HocPhanId);
     }

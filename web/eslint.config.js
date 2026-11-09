@@ -39,6 +39,21 @@ module.exports = defineConfig([
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
       '@angular-eslint/template/prefer-control-flow': 'error',
+      // Component nhập liệu của NG-ZORRO được coi là control khi nằm trong <label>.
+      '@angular-eslint/template/label-has-associated-control': [
+        'error',
+        {
+          controlComponents: [
+            'nz-select',
+            'nz-input-number',
+            'nz-date-picker',
+            'nz-switch',
+            'nz-radio-group',
+            'nz-checkbox-group',
+            'nz-upload',
+          ],
+        },
+      ],
     },
   },
 ]);

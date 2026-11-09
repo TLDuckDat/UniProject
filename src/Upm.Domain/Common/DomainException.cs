@@ -24,4 +24,13 @@ public class DomainException : Exception
 
     /// <summary>Mã lỗi nghiệp vụ, luôn bắt đầu bằng <c>UPM_</c>.</summary>
     public string Code { get; }
+
+    /// <summary>
+    /// Mã lỗi là "từ chối quyền" (không có quyền trên đối tượng, sai vai trò) → HTTP 403.
+    /// Các mã khác là vi phạm luật nghiệp vụ → HTTP 422.
+    /// </summary>
+    public static bool LaLoiTuChoiQuyen(string code) =>
+        code == "UPM_PERMISSION_DENIED"
+        || code.StartsWith("UPM_CHI_", StringComparison.Ordinal)
+        || code.EndsWith("_PERMISSION_DENIED", StringComparison.Ordinal);
 }

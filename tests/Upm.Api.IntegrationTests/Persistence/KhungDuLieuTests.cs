@@ -33,7 +33,7 @@ public sealed class KhungDuLieuTests(UpmApiFactory factory)
             r => r.GetString(0));
 
         var coAudit = tatCaBang.Except(BangKhongAudit).ToList();
-        Assert.Equal(41, coAudit.Count);
+        Assert.Equal(44, coAudit.Count); // + KhaiBaoXungDot (UC-2) + TepDinhKem, ThongBao (UC-3a)
         foreach (var bang in coAudit)
         {
             var c = cot.Where(x => x.Bang == bang).ToDictionary(x => x.Cot);
@@ -55,7 +55,7 @@ public sealed class KhungDuLieuTests(UpmApiFactory factory)
               AND f.delete_referential_action = 0
             """,
             r => r.GetInt32(0));
-        Assert.Equal(41 * 2, fk.Single());
+        Assert.Equal(44 * 2, fk.Single()); // 44 bảng có cột audit
     }
 
     [Fact]

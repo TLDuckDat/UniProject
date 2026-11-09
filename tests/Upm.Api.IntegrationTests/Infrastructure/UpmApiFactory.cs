@@ -19,7 +19,7 @@ namespace Upm.Api.IntegrationTests.Infrastructure;
 /// </summary>
 public sealed class UpmApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    public const string SqlServerImage = "mcr.microsoft.com/mssql/server:2022-latest";
+    public const string SqlServerImage = "mcr.microsoft.com/mssql/server:2022-CU17-ubuntu-22.04";
     public const string JwtSigningKey = "upm-integration-test-signing-key-0123456789-abcdef";
 
     private readonly MsSqlContainer _sql = new MsSqlBuilder(SqlServerImage).Build();
@@ -30,6 +30,12 @@ public sealed class UpmApiFactory : WebApplicationFactory<Program>, IAsyncLifeti
 
     /// <summary>Đồng hồ dùng chung của API trong test – chỉnh <see cref="TestClock.Lech"/> để "tua" thời gian.</summary>
     public TestClock Clock { get; } = new();
+
+    /// <summary>Email gửi đi được ghi lại trong bộ nhớ (không gửi thật).</summary>
+    public RecordingEmailSender Email { get; } = new();
+
+    /// <summary>Thư mục tạm cho file tải lên trong test.</summary>
+    public string TepThuMuc { get; } = Path.Combine(Path.GetTempPath(), "upm-test-tep-" + Guid.NewGuid().ToString("N"));
 
     public async ValueTask InitializeAsync()
     {
@@ -53,7 +59,14 @@ public sealed class UpmApiFactory : WebApplicationFactory<Program>, IAsyncLifeti
         // Giữ nguyên giới hạn đăng nhập thật (300/IP/phút, 5 lần sai/15 phút) để test đúng cấu hình.
         builder.UseSetting("Hangfire:DashboardEnabled", "true");
 
-        builder.ConfigureTestServices(services => services.Replace(ServiceDescriptor.Singleton<IClock>(Clock)));
+        builder.UseSetting("Files:Root", TepThuMuc);
+        // Test kiểm soát đạo văn bằng nhập tay; không để giả lập tự quét (kết quả phụ thuộc nội dung file).
+        builder.UseSetting("Quyen:DaoVanTuDong", "false");
+        builder.ConfigureTestServices(services =>
+        {
+            services.Replace(ServiceDescriptor.Singleton<IClock>(Clock));
+            services.Replace(ServiceDescriptor.Singleton<Upm.Application.TienDo.IEmailSender>(Email));
+        });
     }
 
     /// <summary>Scope DI mới để lấy UpmDbContext / service thật của API.</summary>
@@ -130,6 +143,24 @@ public sealed class UpmApiFactory : WebApplicationFactory<Program>, IAsyncLifeti
         await base.DisposeAsync();
         await _sql.DisposeAsync();
         _seedLock.Dispose();
+    }
+}
+
+/// <summary>IEmailSender trong test: lưu lại thư gửi đi để kiểm tra "không gửi trùng".</summary>
+public sealed class RecordingEmailSender : Upm.Application.TienDo.IEmailSender
+{
+    private readonly List<(string To, string Subject, string Body)> _thu = [];
+    private readonly object _khoa = new();
+
+    public Task GuiAsync(string denEmail, string tieuDe, string noiDung, CancellationToken ct = default)
+    {
+        lock (_khoa) _thu.Add((denEmail, tieuDe, noiDung));
+        return Task.CompletedTask;
+    }
+
+    public IReadOnlyList<(string To, string Subject, string Body)> DaGui
+    {
+        get { lock (_khoa) return _thu.ToArray(); }
     }
 }
 

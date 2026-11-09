@@ -5,10 +5,17 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Upm.Application.DeTaiPhanCong;
+using Upm.Application.QuyenDocDuyet;
+using Upm.Application.TienDo;
 using Upm.Application.Abstractions;
 using Upm.Application.PhanQuyen;
 using Upm.Application.TraCuuSinhVien;
 using Upm.Application.XacThuc;
+using Upm.Application.Workflow;
+using Upm.Application.DongBo;
+using Upm.Application.DanhMuc;
+using Upm.Application.RuleSets;
 using Upm.Domain.Entities;
 using Upm.Infrastructure.Identity;
 using Upm.Infrastructure.Queries;
@@ -16,6 +23,8 @@ using Upm.Infrastructure.Persistence;
 using Upm.Infrastructure.Persistence.Interceptors;
 using Upm.Infrastructure.Persistence.Seed;
 using Upm.Infrastructure.Time;
+using Upm.Infrastructure.Workflow;
+using Upm.Infrastructure.Importing;
 
 namespace Upm.Infrastructure;
 
@@ -50,6 +59,28 @@ public static class DependencyInjection
 
         // Truy vấn
         services.AddScoped<ISinhVienQueries, SinhVienQueries>();
+        services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+        services.AddScoped<IDotDATNService, DotDATNService>();
+        services.AddScoped<IXetGiaoBatchRunner, XetGiaoBatchRunner>();
+        services.AddScoped<XetGiaoDotHangfireJob>();
+        services.AddScoped<IXetGiaoJobScheduler, XetGiaoJobScheduler>();
+        services.AddScoped<IDeTaiService, Upm.Infrastructure.DeTaiPhanCong.DeTaiService>();
+        // UC-3a: tiến độ, phiếu giao nhiệm vụ, nhắc việc, lưu file, email
+        services.AddScoped<ITienDoService, Upm.Infrastructure.TienDo.TienDoService>();
+        services.AddScoped<INhacViecService, Upm.Infrastructure.TienDo.NhacViecService>();
+        services.AddScoped<Upm.Infrastructure.TienDo.NhacViecHangfireJob>();
+        services.AddSingleton<IFileStorage, Upm.Infrastructure.TienDo.LocalFileStorage>();
+        services.AddScoped<IEmailSender, Upm.Infrastructure.TienDo.SmtpEmailSender>();
+        services.AddOptions<Upm.Infrastructure.TienDo.TepOptions>().BindConfiguration(Upm.Infrastructure.TienDo.TepOptions.Section);
+
+        // UC-3b: nộp quyển, ý kiến, đọc duyệt, đạo văn (giả lập), bảo vệ
+        services.AddScoped<IQuyenService, Upm.Infrastructure.QuyenDocDuyet.QuyenService>();
+        services.AddSingleton<IPlagiarismChecker, Upm.Infrastructure.QuyenDocDuyet.SimulatedPlagiarismChecker>();
+        services.AddOptions<Upm.Infrastructure.QuyenDocDuyet.QuyenOptions>().BindConfiguration(Upm.Infrastructure.QuyenDocDuyet.QuyenOptions.Section);
+        services.AddScoped<IQldtGateway, QldtGateway>();
+        services.AddScoped<IDanhMucService, DanhMucService>();
+        services.AddScoped<ITaiKhoanQuanLyService, TaiKhoanQuanLyService>();
+        services.AddScoped<IRuleSetService, RuleSetService>();
 
         // Đọc connection string lúc resolve (không đọc lúc đăng ký) để integration test ghi đè được cấu hình.
         // Thứ tự interceptor: điền NgayTao/NgaySua trước, rồi mới chụp giá trị cho AuditLog.
@@ -67,6 +98,7 @@ public static class DependencyInjection
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
+            .UseFilter(new XetGiaoJobMetadataFilter())
             .UseSqlServerStorage(
                 () => new SqlConnection(GetConnectionString(sp)),
                 new SqlServerStorageOptions

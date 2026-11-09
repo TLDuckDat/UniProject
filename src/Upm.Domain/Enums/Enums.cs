@@ -61,10 +61,10 @@ public enum TrangThaiLichBaoVe { DuKien, DaBaoVe, VangCoLyDo, VangKhongLyDo, Bao
 // ---------- ERD-07 · Quyết định, đơn từ, log ----------
 public enum LoaiQuyetDinh { GiaoDATN, DieuChinh, ThanhLapHD, SuaDiem, Khac }
 
-public enum LoaiDon { DoiDeTai, GiaHan, HoanBaoVe, VangBaoVe, XinDung, KhieuNai, PhucKhao }
+public enum LoaiDon { DoiDeTai, DoiGVHD, GiaHan, HoanBaoVe, VangBaoVe, XinDung, KhieuNai, KhieuNaiXetGiao, PhucKhao }
 
 public enum TrangThaiDonTu { ChoXuLy, DaDuyet, TuChoi }
 
 public enum HanhDongAudit { Insert, Update, Delete, Transition }
 
-public enum LoaiNhac { MocTienDo, HanDocDuyet, HanSuaGap, HanHocKyLienKe, HanBanCuoi }
+public enum LoaiNhac { MocTienDo, HanDocDuyet, HanSuaGap, HanHocKyLienKe, HanBanCuoi, QuaHanMocTienDo, CanhBaoBaoCaoTienDo }

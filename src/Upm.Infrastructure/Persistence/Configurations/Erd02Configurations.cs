@@ -90,6 +90,7 @@ internal sealed class ThongTinTienDoSVConfiguration : IEntityTypeConfiguration<T
     {
         b.ToUpmTable("ThongTinTienDoSV");
         b.Property(x => x.KyCuoiKeHoach).Str(10);
+        b.Property(x => x.NguonDongBo).Str(30);
         b.HasFk(x => x.SinhVien, x => x.SinhVienId);
         b.HasIndex(x => x.SinhVienId).IsUnique(); // 1 : 1
     }
@@ -118,6 +119,7 @@ internal sealed class KyLuatSVConfiguration : IEntityTypeConfiguration<KyLuatSV>
         b.ToUpmTable("KyLuatSV");
         b.Property(x => x.MucKyLuat).Str(50);
         b.Property(x => x.NguonCTSV).Str(30);
+        b.Property(x => x.NguonDongBo).Str(30);
         b.HasFk(x => x.SinhVien, x => x.SinhVienId);
     }
 }

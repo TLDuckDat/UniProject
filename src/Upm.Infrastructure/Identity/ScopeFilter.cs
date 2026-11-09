@@ -45,6 +45,9 @@ public sealed class ScopeFilter(IQuyenHienTai quyen) : IScopeFilter
         [typeof(Khoa)] = S<Khoa>(x => x.CoSoId, x => x.Id),
         [typeof(BoMon)] = S<BoMon>(x => x.Khoa.CoSoId, x => x.KhoaId, x => x.Id),
         [typeof(ChuongTrinhDaoTao)] = S<ChuongTrinhDaoTao>(x => x.Khoa.CoSoId, x => x.KhoaId),
+        [typeof(CTDTHocPhan)] = S<CTDTHocPhan>(x => x.CTDT.Khoa.CoSoId, x => x.CTDT.KhoaId),
+        [typeof(ThamSoBoMon)] = S<ThamSoBoMon>(x => x.BoMon.Khoa.CoSoId, x => x.BoMon.KhoaId, x => x.BoMonId),
+        [typeof(ThamSoDaoVan)] = S<ThamSoDaoVan>(x => x.Khoa.CoSoId, x => x.KhoaId),
 
         // ----- Bảng GỐC có CoSoId -----
         [typeof(GiangVien)] = S<GiangVien>(x => x.CoSoId, x => x.BoMon.KhoaId, x => x.BoMonId),

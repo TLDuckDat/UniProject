@@ -60,6 +60,10 @@ public class SinhVien : AuditableEntity
     public TrangThaiHocTap TrangThaiHocTap { get; set; }
     public DateOnly NgayNhapHoc { get; set; }
     public string? Email { get; set; }
+    /// <summary>Nguồn cập nhật gần nhất (QLĐT import/API).</summary>
+    public string? NguonDongBo { get; set; }
+    /// <summary>Thời điểm đồng bộ gần nhất UTC.</summary>
+    public DateTime? DongBoLuc { get; set; }
 }
 
 public class ChuongTrinhDaoTao : AuditableEntity

@@ -90,5 +90,7 @@ internal sealed class LichNhacViecConfiguration : IEntityTypeConfiguration<LichN
         b.HasFk(x => x.SVTrongDot, x => x.SVTrongDotId);
         // Job nhắc việc quét các dòng chưa gửi đến hạn.
         b.HasIndex(x => new { x.DaGui, x.HanNgay });
+        // UC-3a: không gửi trùng – một hồ sơ, một loại nhắc, một hạn chỉ có một bản ghi.
+        b.HasIndex(x => new { x.SVTrongDotId, x.LoaiNhac, x.HanNgay }).IsUnique();
     }
 }

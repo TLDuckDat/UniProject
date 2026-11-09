@@ -34,7 +34,7 @@ public class SVTrongDot : AuditableEntity
     public ChuongTrinhDaoTao CTDT { get; set; } = null!;
     public long CoSoId { get; set; }
     public CoSo CoSo { get; set; } = null!;
-    public TrangThaiSVTrongDot TrangThai { get; set; } = TrangThaiSVTrongDot.CHO_XET;
+    public TrangThaiSVTrongDot TrangThai { get; internal set; } = TrangThaiSVTrongDot.CHO_XET;
     public bool CoNoTinChi { get; set; }
     public bool ChuaQuaTTTN { get; set; }
     public long? DeTaiId { get; set; }
@@ -75,6 +75,11 @@ public class XetDieuKien : AuditableEntity
     public bool? K5_Gpa { get; set; }
     public bool? K6_TTTN { get; set; }
     public string? LyDo { get; set; }
+    /// <summary>
+    /// Mã ngoại lệ giải thích kết luận (A01–A14 khi xét giao) – không có trong thiet-ke.md, thêm để Phòng ĐT/SV
+    /// đọc snapshot không cần suy luận lại. Với LoaiXet Giao/XetLai: K1_KyLuat = G1, K2_GVHD = G2, K4_DuTC = G3, K6_TTTN = đã đạt TTTN.
+    /// </summary>
+    public string? MaNgoaiLe { get; set; }
 
     public ICollection<XetDieuKienChiTiet> ChiTiets { get; set; } = [];
 }
@@ -88,4 +93,8 @@ public class XetDieuKienChiTiet : AuditableEntity
     public int SoTC { get; set; }
     public LoaiNo LoaiNo { get; set; }
     public bool BiLoaiTru { get; set; }
+    /// <summary>Mã ngoại lệ đã giải thích kết quả tại thời điểm xét (A01–A14).</summary>
+    public string? MaNgoaiLe { get; set; }
+    /// <summary>Giải thích được chụp cùng snapshot để Phòng ĐT/SV tra cứu về sau.</summary>
+    public string? LyDo { get; set; }
 }

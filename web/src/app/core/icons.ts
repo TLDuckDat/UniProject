@@ -19,6 +19,10 @@ import {
   SolutionOutline,
   TeamOutline,
   UserOutline,
+  HistoryOutline,
+  PlayCircleOutline,
+  PlusOutline,
+  WarningOutline,
 } from '@ant-design/icons-angular/icons';
 
 /**
@@ -46,4 +50,8 @@ export const APP_ICONS = [
   SolutionOutline,
   TeamOutline,
   UserOutline,
+  HistoryOutline,
+  PlayCircleOutline,
+  PlusOutline,
+  WarningOutline,
 ];

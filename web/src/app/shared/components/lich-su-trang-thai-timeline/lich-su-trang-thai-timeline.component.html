@@ -1,0 +1,23 @@
+<nz-timeline>
+  @for (item of lichSu(); track item.thoiDiem + item.denTrangThai) {
+    <nz-timeline-item [nzColor]="mau(item.denTrangThai)">
+      <div class="entry">
+        <div class="entry-heading">
+          <app-trang-thai-tag [trangThai]="item.denTrangThai" />
+          <time>{{ item.thoiDiem | date: 'dd/MM/yyyy HH:mm' }}</time>
+        </div>
+        @if (item.tuTrangThai) {
+          <p class="transition">{{ item.tuTrangThai }} → {{ item.denTrangThai }}</p>
+        } @else {
+          <p class="transition">Tạo hồ sơ</p>
+        }
+        @if (item.lyDo) {
+          <p class="reason">{{ item.lyDo }}</p>
+        }
+        <small>{{
+          item.nguoiThucHienId ? 'Người thực hiện #' + item.nguoiThucHienId : 'Hệ thống'
+        }}</small>
+      </div>
+    </nz-timeline-item>
+  }
+</nz-timeline>

@@ -34,6 +34,24 @@ public static class MaLuat
 {
     public const string RuleSetTheoKhoa = "RULESET_THEO_KHOA";
     public const string TCChuaTichLuy = "TC_CHUA_TICH_LUY";
+    public const string DuaVaoDot = "DUA_VAO_DOT";
+
+    public const string DeTaiSoSV = "DE_TAI_SO_SV";
+    public const string DeTaiTrung = "DE_TAI_TRUNG";
+    public const string PhanCongQuota = "PHAN_CONG_QUOTA";
+    public const string PhanCongGVDD = "PHAN_CONG_GVDD";
+    public const string PhanCongXungDot = "PHAN_CONG_XUNG_DOT";
+    public const string PhanCongNgoaiTruong = "PHAN_CONG_NGOAI_TRUONG";
+    public const string HanDoiDeTai = "HAN_DOI_DE_TAI";
+
+    public const string TienDoCamKetAI = "TIEN_DO_CAM_KET_AI";
+    public const string TienDoGiaHan = "TIEN_DO_GIA_HAN";
+
+    public const string QuyenYKienGVHD = "QUYEN_Y_KIEN_GVHD";
+    public const string QuyenDocDuyet = "QUYEN_DOC_DUYET";
+    public const string QuyenHanNop = "QUYEN_HAN_NOP";
+    public const string QuyenDaoVan = "QUYEN_DAO_VAN";
+    public const string QuyenBanBaoVe = "QUYEN_BAN_BAO_VE";
 
     public const string XetGiao = "XET_GIAO";
     public const string G1 = "G1";
